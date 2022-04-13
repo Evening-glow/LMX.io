@@ -1,0 +1,40 @@
+.container{
+    margin:10px;
+    padding:15px;
+    background-color: #fff;
+}
+.rangkingListBox{
+    width: 250px;
+    margin:10px;
+    padding:15px;
+    background-color:#fff;
+}
+.rankingList{
+    width:100%;
+    margin-top:10px;
+    padding:0;
+}
+.rankingList li{
+    width:100%;
+    padding:10px;
+    font-size: 1rem;
+    font-weight: 500;
+    list-style: none;
+    text-align: left;
+    border-bottom:1px solid #ccc;
+    cursor: pointer;
+}
+.rankingList li:hover{
+    color:crimson;
+}
+.top{
+    color:#333;
+    padding:10px;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.rankingListImgs{
+    width:250px;
+    height:150px;
+
+}
