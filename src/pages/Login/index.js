@@ -1,68 +1,47 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-// import './index.css';
-
-
+import { Button, Row, Col } from 'antd';
+// import { UserOutlined, LockOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import './index.css'
 
 class Login extends Component {
-    onFinish = (values) => {
-        console.log('Received values of form: ', values);
-    };
+    state={
+        username:'',
+        password:''
+    }
+    handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(this.state)
+    }
+    handleChange=(e)=>{
+        this.setState({
+            [e.target.name]:e.target.value
+        });
+    }
     render() {
         return (
-            <Form
-                name="normal_login"
-                size="small"
-                className="login-form"
-                initialValues={{
-                    remember: true,
-                }}
-                onFinish={this.onFinish}
-            >
-                <Form.Item
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your Username!',
-                        },
-                    ]}
-                >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your Password!',
-                        },
-                    ]}
-                >
-                    <Input
-                        prefix={<LockOutlined className="site-form-item-icon" />}
-                        type="password"
-                        placeholder="Password"
-                    />
-                </Form.Item>
-                <Form.Item>
-                    <Form.Item name="remember" valuePropName="checked" noStyle>
-                        <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
-
-                    <a className="login-form-forgot" href="">
-                        Forgot password
-                    </a>
-                </Form.Item>
-
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" className="login-form-button">
-                        Log in
-                    </Button>
-                    Or <a href="">register now!</a>
-                </Form.Item>
-            </Form>
+            <Row justify='center' className='formRow'>
+                <Col span={12} className='formCol'>
+                    <form onSubmit={this.handleSubmit}>
+                        <Row justify='center'>
+                            <Col>
+                                <div className='formItem'>
+                                    <label htmlFor='username'>
+                                        <span className="star">*</span>用户名：<input type="text" name="username" id="username" className="input" onChange={this.handleChange}/>
+                                    </label>
+                                </div>
+                                <div className='formItem'>
+                                    <label htmlFor='password'>
+                                        <span className="star">*</span>密码：<input type="password" name="password" id="password" className="input" onChange={this.handleChange}/>
+                                    </label>
+                                </div>
+                                <div className='formItem'><Button htmlType="submit" type="primary" style={{ width: '100%' }}>登录</Button></div>
+                                <div className='formItem'>没有账号？<Link to="/register">去注册</Link></div>
+                            </Col>
+                        </Row>
+                    </form>
+                </Col>
+            </Row>
         );
     }
 }

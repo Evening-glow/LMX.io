@@ -16,8 +16,8 @@
 }
 .rankingList li{
     width:100%;
-    padding:10px;
-    font-size: 1rem;
+    padding:5px;
+    font-size: 0.8rem;
     font-weight: 500;
     list-style: none;
     text-align: left;
@@ -29,12 +29,11 @@
 }
 .top{
     color:#333;
-    padding:10px;
+    /* padding:10px; */
     font-size: 1.5rem;
     font-weight: 600;
 }
 .rankingListImgs{
-    width:250px;
+    width:300px;
     height:150px;
-
 }

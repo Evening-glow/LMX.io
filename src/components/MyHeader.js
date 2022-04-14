@@ -25,6 +25,9 @@ class MyHeader extends React.Component {
           current: item.key
         });
     }
+    changeDispaly=()=>{
+        this.setState({})
+    }
     
     render() {
         const { current } = this.state;
@@ -32,7 +35,7 @@ class MyHeader extends React.Component {
             <Row justify="start" align="middle">
                 <Col><img src={logo} alt="logo"/></Col>
                 <Col>
-                    <Menu onSelect={this.handleSelectKey} selectedKeys={[current]}  mode="horizontal" style={{fontSize:'16px'}}>
+                    <Menu onClick={this.changeDispaly} onSelect={this.handleSelectKey} defaultSelectedKeys={[current]} selectedKeys={[current]}  mode="horizontal" style={{fontSize:'16px'}}>
                         <Menu.Item key="/home">
                             <Link to="/home">首页</Link>
                         </Menu.Item>
@@ -47,6 +50,9 @@ class MyHeader extends React.Component {
                 <Col>
                     <Link to="/login">
                         <Button type="primary">登录</Button>
+                    </Link>
+                    <Link to="/register">
+                        <Button type="primary">注册</Button>
                     </Link>
                 </Col>
             </Row>

@@ -1,15 +1,25 @@
-.login-form {
-    max-width: 300px;
+.formRow{
+    margin: 25px;
+    background-color:#fff;
 }
-
-.login-form-forgot {
-    float: right;
+.formCol{
+    background-color: #fff;
+     padding: 25px;
+     box-shadow:3px 5px 10px #ccc;
 }
-
-.login-form-forgot {
-    float: left;
+.star{
+    color:red;
 }
-
-.login-form-button {
-    width: 100%;
+.formItem{
+    margin:30px;
+    text-align: right;
+}
+.input{
+    outline: none;
+    border:1px solid #ccc;
+    max-width: 250px;
+}
+.input:focus{
+    border:1px solid skyblue;
+    box-shadow: 1px 1px 5px skyblue;
 }
