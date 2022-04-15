@@ -1,61 +1,19 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Row, Col, Button } from 'antd';
+import RegisterForm from '../../components/RegisterForm';
 import '../../pages/Login/index.css';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCrators as registerActionCrators} from './store';
-class Register extends Component {
-    state = {
-        username: '',
-        email: '',
-        password: '',
-        repPassword: ''
-    }
-    // 在表单提交中调用actionCreators的函数
-    handleSubmit = (e) => {
-        e.preventDefault();
-        // console.log('register')
-        this.props.registerFn.registerAction();
-    }
-    handleChange = (e) => {
 
-    }
-    render() {
-        return (
-            <Row justify='center' className='formRow'>
-                <Col span={12} className='formCol'>
-                    <form onSubmit={this.handleSubmit}>
-                        <Row justify='center'>
-                            <Col>
-                                <div className='formItem'>
-                                    <label htmlFor='username'>
-                                        <span className="star">*</span>用户名：<input type="text" name="username" id="username" className='input' onChange={this.handleChange} />
-                                    </label>
-                                </div>
-                                <div className='formItem'>
-                                    <label htmlFor='email'>
-                                        邮箱：<input type="email" name="email" id="email" className='input' onChange={this.handleChange} />
-                                    </label>
-                                </div>
-                                <div className='formItem'>
-                                    <label htmlFor='password'>
-                                        <span className="star">*</span>密码：<input type="password" name="password" id="password" className='input' onChange={this.handleChange} />
-                                    </label>
-                                </div>
-                                <div className='formItem'>
-                                    <label htmlFor='repPassword'>
-                                        <span className="star">*</span>确认密码：<input type="password" name="repPassword" id="repPassword" className='input' onChange={this.handleChange} />
-                                    </label>
-                                </div>
-                                <div className='formItem'><Button htmlType="submit" type="primary" style={{ width: '100%' }}>登录</Button></div>
-                                <div className='formItem'>已有账号？<Link to="/login">去登录</Link></div>
-                            </Col>
-                        </Row>
-                    </form>
-                </Col>
-            </Row>
-        )
+/*将redux和react关联*/
+import { connect } from 'react-redux';
+/*
+把一个 value 为不同 action creator 的对象，转成拥有同名 key 的对象。
+同时使用 dispatch 对每个 action creator 进行包装，以便可以直接调用它们。
+bindActionCreators(actionCreators, dispatch)
+*/
+import { bindActionCreators } from 'redux';
+import { actionCrators as registerActionCrators } from './store';
+class Register extends Component {
+    render(){
+        return <RegisterForm {...this.props}/>;
     }
 }
 
@@ -67,10 +25,10 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        registerFn:bindActionCreators(registerActionCrators,dispatch)
+        registerFn: bindActionCreators(registerActionCrators, dispatch)
     }
 };
 
-// 参数一：需要传入映射的state对象，参数二：需要传入映射的actionCreators对象
+// 参数一：需要传入映射的state对象将state映射到组件的props中，参数二：需要传入映射的actionCreators对象将action也映射到组件props中把各种 dispatch也变成了 props 让你可以直接使用，进而修改 store 中的数据。；
 //这样就可以从register/store下的reducer拿到state
-export default connect(mapStateToProps,mapDispatchToProps)(Register);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
