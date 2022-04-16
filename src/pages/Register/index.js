@@ -10,7 +10,9 @@ import { connect } from 'react-redux';
 bindActionCreators(actionCreators, dispatch)
 */
 import { bindActionCreators } from 'redux';
-import { actionCrators as registerActionCrators } from './store';
+import { actionCreators as registerActionCreators } from './store';
+import { actionCreators as finishActionCreators } from '../Finish/store';
+
 class Register extends Component {
     render(){
         return <RegisterForm {...this.props}/>;
@@ -25,7 +27,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
     return {
-        registerFn: bindActionCreators(registerActionCrators, dispatch)
+        registerFn: bindActionCreators(registerActionCreators, dispatch),
+        finishFn:bindActionCreators(finishActionCreators,dispatch),
     }
 };
 

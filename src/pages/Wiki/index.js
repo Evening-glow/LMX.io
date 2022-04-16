@@ -1,20 +1,24 @@
 import React from 'react';
 import axios from 'axios';
 import imgURL from '../../utils/getImages';
-import { List, Typography, Row, Col, Layout } from 'antd';
+import { List, Typography, Row, Col } from 'antd';
 import RankingList from '../../components/RankingList';
 import topImg from '../../publicImages/images/rotationCard1.jpg';
+import {Link,Outlet} from 'react-router-dom';
+
 const { Paragraph } = Typography;
 
-const { Content } = Layout;
-
 const imgStyle = {
-    position:'relative',
-    top:-200
+    position: 'relative',
+    top: -200
 }
 export default class Wiki extends React.Component {
     state = {
-        flowerInfo: []
+        flowerInfo: [],
+        isShow:true
+    }
+    changeShow=()=>{
+        this.setState({isShow:false});
     }
     componentDidMount() {
         axios.get('http://localhost:5000/flowerInfo')
@@ -47,59 +51,61 @@ export default class Wiki extends React.Component {
                     },
                 ]
                 this.setState({ flowerInfo: flowerInfos });
-                console.log(error)
+                
             })
     }
     render() {
-        const { flowerInfo } = this.state;
+        const { flowerInfo,isShow } = this.state;
         return (
-            <Layout style={{backgroundCOlor:'#fff'}}>
+            <div style={{ backgroundColor: '#fff' }}>
                 <Row>
                     <Col span={24}>
                         <div style={{ width: '100%', height: '400px', overflow: 'hidden' }}><img style={imgStyle} src={topImg} alt="topImg" /></div>
                     </Col>
                 </Row>
-                <Content style={{ padding: '50px 50px 0 50px'}}>
-                    <Row justify="space-around">
-                        <Col span={16}>
-                            <List
-                                itemLayout="vertical"
-                                size="default"
-                                pagination={{
-                                    onChange: page => {
-                                        // console.log(page);
-                                    },
-                                    pageSize: 4,
-                                }}
-                                header={<h2>花卉知识</h2>}
-                                dataSource={flowerInfo}
+                <Row justify="space-around" style={{display:isShow?'':'none'}}>
+                    <Col span={16}>
+                        <List
+                            itemLayout="vertical"
+                            size="default"
+                            pagination={{
+                                onChange: page => {
+                                    // console.log(page);
+                                },
+                                pageSize: 4,
+                            }}
+                            header={<h2>花卉知识</h2>}
+                            dataSource={flowerInfo}
 
-                                renderItem={item => (
-                                    <List.Item
-                                        key={item.id}
-                                        extra={
-                                            <img
-                                                width={200}
-                                                alt="logo"
-                                                src={imgURL[item.id]}
-                                            />
-                                        }
-                                    >
-                                        <List.Item.Meta
-                                            title={item.name}
+                            renderItem={item => (
+                                <List.Item
+                                    key={item.id}
+                                    extra={
+                                        <img
+                                            width={200}
+                                            alt="logo"
+                                            src={imgURL[item.id]}
                                         />
-                                        <Paragraph ellipsis={{ rows: 3 }}>{item.environment}</Paragraph>
-                                    </List.Item>
-                                )}
-                            />
-                        </Col>
-                        <Col>
-                            <RankingList />
-                        </Col>
-                    </Row>
-                </Content>
-
-            </Layout>
+                                    }
+                                >
+                                    <List.Item.Meta
+                                        title={<Link to="flower" onClick={this.changeShow}>{item.name}</Link>}
+                                    />
+                                    <Paragraph ellipsis={{ rows: 3 }}>{item.environment}</Paragraph>
+                                </List.Item>
+                            )}
+                        />
+                    </Col>
+                    <Col>
+                        <RankingList/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Outlet/>
+                    </Col>
+                </Row>
+            </div>
         );
     }
 }

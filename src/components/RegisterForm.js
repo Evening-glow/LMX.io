@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Button } from 'antd';
 import classnames from 'classnames';
 import withRouter from "../utils/withRouter";
+import shortid from 'shortid';
 
 class RegisterForm extends React.Component {
     state = {
@@ -21,12 +22,19 @@ class RegisterForm extends React.Component {
         /** 
          * 点击提交后将this.state中的数据提交到后台
         */
-        // console.log('register')
+
         const { data } = await this.props.registerFn.registerAction(this.state.userInfo);
         if (data.status === 1) {
             return this.setState({ errMsg: data.msg });
         }
-        window.location.href="/home";
+        this.props.finishFn.addFinishAc({
+            type: 'success',
+            msg: '注册成功',
+            id: shortid.generate()
+        });
+        // console.log(this.props)
+        this.props.history('/home');
+
     }
     handleChange = e => {
         this.setState({

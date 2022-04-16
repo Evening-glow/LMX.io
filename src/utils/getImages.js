@@ -1,3 +1,6 @@
+/*
+用于获取项目中静态资源的图片
+*/
 import morning from '../publicImages/flowerImgs/01.jpg';
 import jasmine from '../publicImages/flowerImgs/02.jpg';
 import sunflower from '../publicImages/flowerImgs/03.jpg';
