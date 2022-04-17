@@ -1,0 +1,1 @@
+export const SYNC_USER_INFO = 'SYNC_USER_INFO';

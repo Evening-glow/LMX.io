@@ -1,8 +1,10 @@
 import React from 'react';
-import { Menu, Row, Col,Button } from 'antd';
+import { Menu, Row, Col, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import logo from '../publicImages/images/logo.png';
 import withRouter from '../utils/withRouter';
+import { connect } from 'react-redux';
+
 
 class MyHeader extends React.Component {
     state = {
@@ -11,31 +13,31 @@ class MyHeader extends React.Component {
     // handleClick = e => {
     //     this.setState({ current: e.key });
     // };
-    componentDidMount(){
+    componentDidMount() {
         let url = this.props.location.pathname;
         this.setState({
-          current: url
+            current: url
         });
-      }
+    }
 
     //被选中时调用
-    handleSelectKey=(item,key,selectedKeys)=>{
+    handleSelectKey = (item, key, selectedKeys) => {
         //console.log(item.key);
         this.setState({
-          current: item.key
+            current: item.key
         });
     }
-    changeDispaly=()=>{
+    changeDispaly = () => {
         this.setState({})
     }
-    
+
     render() {
         const { current } = this.state;
         return (
             <Row justify="start" align="middle">
-                <Col><img src={logo} alt="logo"/></Col>
+                <Col><img src={logo} alt="logo" /></Col>
                 <Col>
-                    <Menu onClick={this.changeDispaly} onSelect={this.handleSelectKey} defaultSelectedKeys={[current]} selectedKeys={[current]}  mode="horizontal" style={{fontSize:'16px'}}>
+                    <Menu onClick={this.changeDispaly} onSelect={this.handleSelectKey} defaultSelectedKeys={[current]} selectedKeys={[current]} mode="horizontal" style={{ fontSize: '16px' }}>
                         <Menu.Item key="/home">
                             <Link to="/home">首页</Link>
                         </Menu.Item>
@@ -48,15 +50,23 @@ class MyHeader extends React.Component {
                     </Menu>
                 </Col>
                 <Col>
-                    <Link to="/login">
-                        <Button type="primary">登录</Button>
-                    </Link>
-                    <Link to="/register">
-                        <Button type="primary">注册</Button>
-                    </Link>
+                    <div style={{display:this.props.loginData.isLogin?'':'none'}}>
+                        <Link to="/login"><Button type="primary">个人中心</Button></Link>
+                        <Link to="/register"><Button type="primary">退出</Button></Link>
+                    </div>
+                    <div style={{display:this.props.loginData.isLogin?'none':''}}>
+                        <Link to="/login"><Button type="primary">登录</Button>
+                        </Link><Link to="/register"><Button type="primary">注册</Button></Link>
+                    </div>
+
                 </Col>
             </Row>
         );
     }
 }
-export default withRouter(MyHeader);
+const mapStateToprops = state => {
+    return {
+        loginData: state.login
+    };
+};
+export default connect(mapStateToprops, null)(withRouter(MyHeader));
