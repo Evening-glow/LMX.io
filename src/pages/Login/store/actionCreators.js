@@ -11,3 +11,9 @@ export const syncUserInfo=data=>{
         payload:data
     }
 }
+export const logout = data => {
+    return dispatch => {
+        localStorage.removeItem('@#TOKEN');
+        dispatch(syncUserInfo({}));
+    }
+}

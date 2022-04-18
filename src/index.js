@@ -8,9 +8,16 @@ import jwtDecode from 'jwt-decode';
 import App from './App';
 import './index.css';
 
+
 const tk = localStorage.getItem('@#TOKEN');
+// 解析token并同步到redux
 if(tk){
-  store.dispatch(syncUserInfo(jwtDecode(tk)));
+  try{
+    store.dispatch(syncUserInfo(jwtDecode(tk)));
+  }catch(err){
+    localStorage.removeItem('@#TOKEN');
+    window.location.href="/login";
+  }
 }
 ReactDOM.render(
   // <React.StrictMode>

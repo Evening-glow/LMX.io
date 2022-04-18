@@ -17,7 +17,7 @@ class LoginForm extends Component {
     handleSubmit = async (e) => {
         e.preventDefault(); this.setState({ errMsg: [] });
         // console.log(this.props)
-        const { data } = await this.props.loginFn.loginAc(this.state.userInfo);
+        const {data}  = await this.props.loginFn.loginAc(this.state.userInfo);
         if (data.status === 0) {
             // 存储token到本地
             localStorage.setItem('@#TOKEN',data.token);
@@ -28,7 +28,6 @@ class LoginForm extends Component {
                 id: shortid.generate()
             });
             this.props.history('/home');
-            console.log(this.props)
             return;
         }
         
