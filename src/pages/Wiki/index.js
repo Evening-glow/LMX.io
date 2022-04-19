@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axios from '../../utils/request';
 import imgURL from '../../utils/getImages';
 import { List, Typography, Row, Col } from 'antd';
 import RankingList from '../../components/RankingList';
@@ -21,9 +21,12 @@ export default class Wiki extends React.Component {
         this.setState({isShow:false});
     }
     componentDidMount() {
-        axios.get('http://localhost:5000/flowerInfo')
+        axios.get('/api/flowerInfo')
             .then(response => {
-                this.setState({ flowerInfo: response.data.data });
+                // this.setState({ flowerInfo: response.data });
+                // console.log(response)
+                const data = response.data.data;
+                this.setState({flowerInfo:data});
             })
             .catch(error => {
                 const flowerInfos = [
@@ -89,7 +92,7 @@ export default class Wiki extends React.Component {
                                     }
                                 >
                                     <List.Item.Meta
-                                        title={<Link to="flower" onClick={this.changeShow}>{item.name}</Link>}
+                                        title={<Link to={`/wiki/flower/?id=${item.id}`} onClick={this.changeShow}>{item.name}</Link>}
                                     />
                                     <Paragraph ellipsis={{ rows: 3 }}>{item.environment}</Paragraph>
                                 </List.Item>

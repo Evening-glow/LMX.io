@@ -1,0 +1,17 @@
+.goBox {
+    padding: 20px;
+    font-size: 16px;
+}
+
+.content_h1 {
+    color: #333;
+    text-align: center;
+}
+
+.content_p {
+    text-indent: 2rem;
+}
+
+strong {
+    font-weight: 600;
+}

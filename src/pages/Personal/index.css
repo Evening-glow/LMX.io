@@ -1,0 +1,15 @@
+.container_info{
+    background-color: #fff;
+    padding: 30px;
+    height:100vh;
+}
+.infoItem{
+    text-align: right;
+    margin:2rem;
+}
+.infoItem span{
+display: inline-block;
+width:150px;
+/* background-color: #ccc; */
+text-align: left;
+}

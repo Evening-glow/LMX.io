@@ -1,6 +1,7 @@
 .formRow {
     background-image: url(../../publicImages/images/bg.jpg);
     color: #333;
+    height:100vh;
 }
 
 .formCol {

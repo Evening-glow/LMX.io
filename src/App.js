@@ -1,4 +1,4 @@
-import { useRoutes, Routes, Route } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import routes from './routes';
 import React from 'react';
 import { Layout } from 'antd';
@@ -11,10 +11,10 @@ export default function App() {
   const ele = useRoutes(routes);
   return (
     <Layout>
-      <Header style={{backgroundColor: '#fff' }}><MyHeader /></Header>
+      <Header style={{backgroundColor: '#fff',borderBottom:'1px solid #f0f0f0'}}><MyHeader /></Header>
       <Finish />
       <Content>{ele}</Content>
-      <Footer style={{ backgroundColor: '#628f72', paddingTop: '20px', color: '#fff6e9' }}>footer</Footer>
+      <Footer style={{ backgroundColor: '#333', paddingTop: '20px', color: '#fff6e9' }}>footer</Footer>
     </Layout>
   );
 }

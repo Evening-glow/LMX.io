@@ -34,6 +34,8 @@ class MyHeader extends React.Component {
     render() {
         const { current } = this.state;
         const {isLogin} = this.props.loginData;
+        const authShow = isLogin ? '' : 'none';
+        const loginShow = isLogin ? 'none':'';
         return (
             <Row justify="space-between" align="middle">
                 <Col><img src={logo} alt="logo" /></Col>
@@ -49,18 +51,18 @@ class MyHeader extends React.Component {
                             <Link to="/wiki">花卉知识</Link>
                         </Menu.Item>
                         
-                        <Menu.Item key="/login" style={{ display: isLogin ? 'none' : '' }}>
+                        <Menu.Item key="/login" style={{ display:loginShow}}>
                             <Link to="/login">登录</Link>
                         </Menu.Item>
                         <Menu.Item key="/register">
-                            <Link to="/register" style={{ display: isLogin ? 'none' : '' }}>注册</Link>
+                            <Link to="/register" style={{ display:loginShow}}>注册</Link>
                         </Menu.Item>
                         <SubMenu key="sub4" title={<Avatar
                             style={{
                                 backgroundColor: '#87d068',
                             }}
                             icon={<UserOutlined />}
-                        />} style={{ display: isLogin ? '' : 'none' }}>
+                        />} style={{ display:authShow}}>
                             <Menu.Item key="9" icon={<AppstoreOutlined />}><Link to="/personal">我的信息</Link></Menu.Item>
                             <Menu.Item key="10" icon={<SettingOutlined />}><Link to="/setup">设置</Link></Menu.Item>
                             <Menu.Item key="11"><Button onClick={this.handleClick}>退出登录</Button></Menu.Item>
