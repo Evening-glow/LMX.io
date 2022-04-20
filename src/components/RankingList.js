@@ -1,8 +1,8 @@
 import React from 'react';
 import { Carousel } from 'antd';
-import firstImg from "../publicImages/images/rotationCard1.jpg";
-import secondeImg from "../publicImages/images/rotationCard2.jpg";
-import thirdImg from "../publicImages/images/rotationCard3.jpg";
+import firstImg from "../publicImages/flowerImgs/07.jpg";
+import secondeImg from "../publicImages/flowerImgs/05.jpg";
+import thirdImg from "../publicImages/flowerImgs/06.jpg";
 
 export default class RankingList extends React.Component {
     render() {
@@ -12,26 +12,26 @@ export default class RankingList extends React.Component {
                 <Carousel autoplay effect="fade">
                     <div>
                         <div className="rankingListImgs">
-                            <img src={firstImg} alt="firstImg" />
+                            <img src={firstImg} alt="firstImg" style={{width:'300px',height:'150px'}}/>
                         </div>
                     </div>
                     <div>
                         <div className="rankingListImgs">
-                            <img src={secondeImg} alt="secondeImg" />
+                            <img src={secondeImg} alt="secondeImg" style={{width:'300px',height:'150px'}}/>
                         </div>
                     </div>
                     <div>
                         <div className="rankingListImgs">
-                            <img src={thirdImg} alt="thridImg" />
+                            <img src={thirdImg} alt="thridImg" style={{width:'300px',height:'150px'}}/>
                         </div>
                     </div>
                 </Carousel>
                 <ul className="rankingList">
-                    <li>玫瑰</li>
-                    <li>郁金香</li>
-                    <li>百合</li>
-                    <li>梅花</li>
-                    <li>樱花</li>
+                    <li><a href='http://localhost:3000/wiki/flower/?id=7'>玫瑰</a></li>
+                    <li><a href='http://localhost:3000/wiki/flower/?id=5'>郁金香</a></li>
+                    <li><a href='http://localhost:3000/wiki/flower/?id=6'>百合</a></li>
+                    <li><a href='http://localhost:3000/wiki/flower/?id=13'>康乃馨</a></li>
+                    <li><a href='http://localhost:3000/wiki/flower/?id=10'>鸢尾</a></li>
                 </ul>
             </div>
         );

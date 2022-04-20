@@ -22,9 +22,11 @@
     list-style: none;
     text-align: left;
     border-bottom:1px solid #ccc;
-    cursor: pointer;
 }
-.rankingList li:hover{
+.rankingList li a{
+    color:#333;
+}
+.rankingList li a:hover{
     color:crimson;
 }
 .top{

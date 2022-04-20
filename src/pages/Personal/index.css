@@ -1,7 +1,18 @@
 .container_info{
-    background-color: #fff;
-    padding: 30px;
-    height:100vh;
+    background-color:#fff;
+    
+}
+.container_title{
+    height: 100vh;
+    padding:10px;
+    margin:20px;
+    box-shadow: 1px 1px 5px #ccc;
+    border-radius: 10px;
+}
+.container_top{
+    height:150px;
+    background-image: url('../../publicImages/images/rotationCard3.jpg');
+    background-position: center;
 }
 .infoItem{
     text-align: right;

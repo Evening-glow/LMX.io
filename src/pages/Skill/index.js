@@ -1,37 +1,36 @@
-import React from 'react';
-import axios from '../../utils/request';
-import imgURL from '../../utils/getImages';
+import React, { Component } from 'react';
 import { List, Typography, Row, Col } from 'antd';
-import RankingList from '../../components/RankingList';
-import topImg from '../../publicImages/images/rotationCard1.jpg';
-import {Link,Outlet} from 'react-router-dom';
-
-const { Paragraph } = Typography;
+import topImg from '../../publicImages/images/rotationCard4.jpg';
+import { Link, Outlet } from 'react-router-dom';
+import axios from '../../utils/request';
+import imgURL from '../../utils/getSkillImgs';
+import {isShow as myShow} from './SkillInfo';
 
 const imgStyle = {
-    position: 'relative',
-    top: -250
+    width: '100%'
 }
-export default class Wiki extends React.Component {
+console.log(myShow)
+const { Paragraph } = Typography;
+export default class Skill extends Component {
     state = {
-        flowerInfo: [],
-        isShow:true
+        info: [],
+        isShow: true
     }
-    changeShow=()=>{
-        this.setState({isShow:false});
+    changeShow = () => {
+        this.setState({ isShow: false });
     }
     componentDidMount() {
-        axios.get('/api/flowerInfo')
+        axios.get('/api/skill')
             .then(response => {
                 const data = response.data.data;
-                this.setState({flowerInfo:data});
+                this.setState({ info: data });
             })
             .catch(error => {
                 console.log(error)
             })
     }
     render() {
-        const { flowerInfo,isShow } = this.state;
+        const { info, isShow } = this.state;
         return (
             <div style={{ backgroundColor: '#fff' }}>
                 <Row>
@@ -39,46 +38,44 @@ export default class Wiki extends React.Component {
                         <div style={{ width: '100%', height: '400px', overflow: 'hidden' }}><img style={imgStyle} src={topImg} alt="topImg" /></div>
                     </Col>
                 </Row>
-                <Row justify="space-around" style={{display:isShow?'':'none'}}>
-                    <Col span={16}>
+                <Row justify="space-around" style={{ display: isShow ? '' : 'none' }}>
+                    <Col span={20}>
                         <List
                             itemLayout="vertical"
                             size="default"
                             pagination={{
-                                onChange: page => {
-                                    // console.log(page);
-                                },
+                                onChange: page => { },
                                 pageSize: 4,
                             }}
-                            header={<h2>花卉知识</h2>}
-                            dataSource={flowerInfo}
+                            header={<h2>花店花艺</h2>}
+                            dataSource={info}
 
                             renderItem={item => (
                                 <List.Item
                                     key={item.id}
                                     extra={
                                         <img
-                                            width={200}
+                                            width={250}
                                             alt="logo"
                                             src={imgURL[item.id]}
                                         />
                                     }
                                 >
                                     <List.Item.Meta
-                                        title={<Link to={`/wiki/flower/?id=${item.id}`} onClick={this.changeShow}>{item.name}</Link>}
+                                        title={<Link to={`/skill/skillInfo/?id=${item.id}`} onClick={this.changeShow}>{item.title}</Link>}
+                                    />
+                                    <List.Item.Meta
+                                        description={<p>作者：{item.author}<br/>时间：{item.dateline.slice(0,19)}</p>}
                                     />
                                     <Paragraph ellipsis={{ rows: 3 }}>{item.environment}</Paragraph>
                                 </List.Item>
                             )}
                         />
                     </Col>
-                    <Col>
-                        <RankingList/>
-                    </Col>
                 </Row>
                 <Row>
                     <Col>
-                        <Outlet/>
+                        <Outlet />
                     </Col>
                 </Row>
             </div>

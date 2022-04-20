@@ -8,8 +8,9 @@ class Personal extends Component {
     render() {
         return (
             <Row justify="center" className='container_info'>
-                <Col span={20}>
-                    <Tabs onChange={this.callback} type="card" tabPosition="left">
+                <Col span={24} className='container_top'></Col>
+                <Col span={20} className='container_title'>
+                    <Tabs onChange={this.callback} type="card">
                         <TabPane tab="用户信息" key="1">
                             <Row>
                                 <Col>

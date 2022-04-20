@@ -50,6 +50,9 @@ class MyHeader extends React.Component {
                         <Menu.Item key="/wiki">
                             <Link to="/wiki">花卉知识</Link>
                         </Menu.Item>
+                        <Menu.Item key="/skill">
+                            <Link to="/skill">花店花艺</Link>
+                        </Menu.Item>
                         
                         <Menu.Item key="/login" style={{ display:loginShow}}>
                             <Link to="/login">登录</Link>

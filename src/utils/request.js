@@ -6,7 +6,7 @@ import axios from 'axios';
 
 //将token添加到请求头
 axios.interceptors.request.use(config=>{
-    const passURL = ['/api/login','/api/register','/api/flowerInfo','/api/search'];
+    const passURL = ['/api/login','/api/register','/api/flowerInfo','/api/search','/api/skill'];
     if(passURL.includes(config.url)) return config;
 
     const tk = localStorage.getItem('@#TOKEN');
