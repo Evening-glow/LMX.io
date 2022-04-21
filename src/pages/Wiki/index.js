@@ -5,6 +5,9 @@ import { List, Typography, Row, Col } from 'antd';
 import RankingList from '../../components/RankingList';
 import topImg from '../../publicImages/images/rotationCard1.jpg';
 import {Link,Outlet} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { showFu,hiddenFu } from './store/actionCreators';
+import withRouter from '../../utils/withRouter';
 
 const { Paragraph } = Typography;
 
@@ -12,15 +15,15 @@ const imgStyle = {
     position: 'relative',
     top: -250
 }
-export default class Wiki extends React.Component {
+class Wiki extends React.Component {
     state = {
-        flowerInfo: [],
-        isShow:true
-    }
-    changeShow=()=>{
-        this.setState({isShow:false});
+        flowerInfo: []
     }
     componentDidMount() {
+        this.props.showFu();
+        if(this.props.location.pathname.includes('/flower')){
+            this.props.hiddenFu();
+        }
         axios.get('/api/flowerInfo')
             .then(response => {
                 const data = response.data.data;
@@ -31,7 +34,8 @@ export default class Wiki extends React.Component {
             })
     }
     render() {
-        const { flowerInfo,isShow } = this.state;
+        const { flowerInfo } = this.state;
+        const isShow = this.props.wikiData;
         return (
             <div style={{ backgroundColor: '#fff' }}>
                 <Row>
@@ -65,7 +69,7 @@ export default class Wiki extends React.Component {
                                     }
                                 >
                                     <List.Item.Meta
-                                        title={<Link to={`/wiki/flower/?id=${item.id}`} onClick={this.changeShow}>{item.name}</Link>}
+                                        title={<Link to={`/wiki/flower/?id=${item.id}`}>{item.name}</Link>}
                                     />
                                     <Paragraph ellipsis={{ rows: 3 }}>{item.environment}</Paragraph>
                                 </List.Item>
@@ -85,3 +89,7 @@ export default class Wiki extends React.Component {
         );
     }
 }
+const mapStateToProps = state=>{
+    return {wikiData:state.wiki};
+};
+export default connect(mapStateToProps,{showFu,hiddenFu})(withRouter(Wiki));

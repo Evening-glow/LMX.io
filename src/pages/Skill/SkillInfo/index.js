@@ -4,6 +4,8 @@ import qs from 'query-string';
 import { Breadcrumb, Row, Col } from 'antd';
 import withRouter from '../../../utils/withRouter';
 import axios from '../../../utils/request';
+import { connect } from 'react-redux';
+import {hiddenFu,showFu} from '../store/actionCreators';
 
 class SkillInfo extends Component {
     state = {
@@ -13,6 +15,7 @@ class SkillInfo extends Component {
         content: ''
     }
     componentDidMount() {
+        this.props.hiddenFu();
         const { id } = qs.parse(this.props.location.search.slice(1));
 
         axios.get("/api/search?table_name=articles&id=" + id)
@@ -27,6 +30,9 @@ class SkillInfo extends Component {
             })
             .catch(err => { console.log(err) })
     }
+    componentWillUnmount(){
+        this.props.showFu();
+    }
     render() {
         const { title, author, content,time } = this.state;
         return (
@@ -34,7 +40,7 @@ class SkillInfo extends Component {
                 <Col span={24} style={{padding:'20px'}}>
                     <Breadcrumb>
                         <Breadcrumb.Item><Link to='/home'>首页</Link></Breadcrumb.Item>
-                        <Breadcrumb.Item href='/skill'>返回</Breadcrumb.Item>
+                        <Breadcrumb.Item><Link to='/skill'>花店花艺</Link></Breadcrumb.Item>
                     </Breadcrumb>
                 </Col>
                 <Row justify='center' style={{padding:'30px 100px'}}>
@@ -48,5 +54,8 @@ class SkillInfo extends Component {
         );
     }
 }
-export default withRouter(SkillInfo);
-export const isShow = false;
+
+const mapStateToProps = state => {
+    return {skillData:state.skill}
+ }
+export default connect(mapStateToProps,{hiddenFu,showFu})(withRouter(SkillInfo));

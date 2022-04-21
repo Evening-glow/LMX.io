@@ -1,3 +1,6 @@
+/**
+ * 所有路由集合
+ */
 import { Navigate } from "react-router-dom";
 import Home from '../pages/Home';
 import Photos from '../pages/Photos';

@@ -12,6 +12,7 @@ class MyHeader extends React.Component {
         current: '/home'
     };
     componentDidMount() {
+        // console.log(this.props.loginData)
         let url = this.props.location.pathname;
         this.setState({
             current: url
@@ -23,9 +24,6 @@ class MyHeader extends React.Component {
         this.setState({
             current: item.key
         });
-    }
-    changeDispaly = () => {
-        this.setState({})
     }
     handleClick=()=>{
         this.props.logout();
@@ -40,7 +38,7 @@ class MyHeader extends React.Component {
             <Row justify="space-between" align="middle">
                 <Col><img src={logo} alt="logo" /></Col>
                 <Col span={12}>
-                    <Menu onClick={this.changeDispaly} onSelect={this.handleSelectKey} defaultSelectedKeys={[current]} selectedKeys={[current]} mode="horizontal" style={{ fontSize: '16px' }}>
+                    <Menu onSelect={this.handleSelectKey} defaultSelectedKeys={[current]} selectedKeys={[current]} mode="horizontal" style={{ fontSize: '16px' }}>
                         <Menu.Item key="/home">
                             <Link to="/home">首页</Link>
                         </Menu.Item>

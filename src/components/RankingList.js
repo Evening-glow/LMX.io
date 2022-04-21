@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import { Carousel } from 'antd';
 import firstImg from "../publicImages/flowerImgs/07.jpg";
 import secondeImg from "../publicImages/flowerImgs/05.jpg";
@@ -27,11 +28,11 @@ export default class RankingList extends React.Component {
                     </div>
                 </Carousel>
                 <ul className="rankingList">
-                    <li><a href='http://localhost:3000/wiki/flower/?id=7'>玫瑰</a></li>
-                    <li><a href='http://localhost:3000/wiki/flower/?id=5'>郁金香</a></li>
-                    <li><a href='http://localhost:3000/wiki/flower/?id=6'>百合</a></li>
-                    <li><a href='http://localhost:3000/wiki/flower/?id=13'>康乃馨</a></li>
-                    <li><a href='http://localhost:3000/wiki/flower/?id=10'>鸢尾</a></li>
+                    <li><Link to='/wiki/flower/?id=7'>玫瑰</Link></li>
+                    <li><Link to='/wiki/flower/?id=5'>郁金香</Link></li>
+                    <li><Link to='/wiki/flower/?id=6'>百合</Link></li>
+                    <li><Link to='/wiki/flower/?id=13'>康乃馨</Link></li>
+                    <li><Link to='/wiki/flower/?id=10'>鸢尾</Link></li>
                 </ul>
             </div>
         );

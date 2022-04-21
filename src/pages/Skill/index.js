@@ -4,22 +4,19 @@ import topImg from '../../publicImages/images/rotationCard4.jpg';
 import { Link, Outlet } from 'react-router-dom';
 import axios from '../../utils/request';
 import imgURL from '../../utils/getSkillImgs';
-import {isShow as myShow} from './SkillInfo';
+import { connect } from 'react-redux';
+import {showFu} from './store/actionCreators';
 
 const imgStyle = {
     width: '100%'
 }
-console.log(myShow)
 const { Paragraph } = Typography;
-export default class Skill extends Component {
+class Skill extends Component {
     state = {
-        info: [],
-        isShow: true
-    }
-    changeShow = () => {
-        this.setState({ isShow: false });
+        info: []
     }
     componentDidMount() {
+        this.props.showFu();
         axios.get('/api/skill')
             .then(response => {
                 const data = response.data.data;
@@ -30,7 +27,8 @@ export default class Skill extends Component {
             })
     }
     render() {
-        const { info, isShow } = this.state;
+        const { info} = this.state;
+        const isShow = this.props.skillData;
         return (
             <div style={{ backgroundColor: '#fff' }}>
                 <Row>
@@ -38,7 +36,7 @@ export default class Skill extends Component {
                         <div style={{ width: '100%', height: '400px', overflow: 'hidden' }}><img style={imgStyle} src={topImg} alt="topImg" /></div>
                     </Col>
                 </Row>
-                <Row justify="space-around" style={{ display: isShow ? '' : 'none' }}>
+                <Row justify="space-around" style={{display:isShow?'':'none'}}>
                     <Col span={20}>
                         <List
                             itemLayout="vertical"
@@ -62,7 +60,7 @@ export default class Skill extends Component {
                                     }
                                 >
                                     <List.Item.Meta
-                                        title={<Link to={`/skill/skillInfo/?id=${item.id}`} onClick={this.changeShow}>{item.title}</Link>}
+                                        title={<Link to={`/skill/skillInfo/?id=${item.id}`}>{item.title}</Link>}
                                     />
                                     <List.Item.Meta
                                         description={<p>作者：{item.author}<br/>时间：{item.dateline.slice(0,19)}</p>}
@@ -82,3 +80,7 @@ export default class Skill extends Component {
         );
     }
 }
+const mapStateToProps = state => {
+   return {skillData:state.skill}
+}
+export default connect(mapStateToProps,{showFu})(Skill);

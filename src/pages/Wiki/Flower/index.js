@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Breadcrumb, Row, Col } from 'antd';
 import withRouter from '../../../utils/withRouter';
 import qs from 'query-string';
 import axios from '../../../utils/request';
+import { connect } from 'react-redux';
+import {hiddenFu,showFu} from '../store/actionCreators';
 import './index.css';
+
 
 class Flower extends Component {
     state = {
@@ -14,19 +18,25 @@ class Flower extends Component {
         area: ''
     }
     componentDidMount() {
+        console.log('flowerisgo')
+        this.props.hiddenFu();
         const { id } = qs.parse(this.props.location.search.slice(1));
         // console.log("http://localhost:5000/api/flower?id="+id)
         axios.get("/api/search?table_name=flower_info&id=" + id)
             .then(response => {
+                const data = response.data.data[0];
                 this.setState({
-                    name: response.data.data[0].name,
-                    careKnowledge: response.data.data[0].careKnowledge,
-                    environment: response.data.data[0].environment,
-                    symbol: response.data.data[0].symbol,
-                    area: response.data.data[0].area
+                    name: data.name,
+                    careKnowledge: data.careKnowledge,
+                    environment: data.environment,
+                    symbol: data.symbol,
+                    area: data.area
                 });
             })
             .catch(err => { console.log(err) })
+    }
+    componentWillUnmount(){
+        this.props.showFu();
     }
     render() {
         const { name, careKnowledge, environment, symbol, area } = this.state;
@@ -35,8 +45,8 @@ class Flower extends Component {
                 <Row className='goBox'>
                     <Col>
                         <Breadcrumb>
-                            <Breadcrumb.Item href="/home">首页</Breadcrumb.Item>
-                            <Breadcrumb.Item href="/wiki">返回</Breadcrumb.Item>
+                            <Breadcrumb.Item><Link to='/home'>首页</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item><Link to='/wiki'>花卉知识</Link></Breadcrumb.Item>
                         </Breadcrumb>
                     </Col>
                 </Row>
@@ -57,4 +67,7 @@ class Flower extends Component {
         );
     }
 }
-export default withRouter(Flower);
+const mapStateToProps = state=>{
+    return {wikiData:state.wiki};
+}
+export default connect(mapStateToProps,{hiddenFu,showFu})(withRouter(Flower));

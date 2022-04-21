@@ -8,9 +8,10 @@ import jwtDecode from 'jwt-decode';
 import App from './App';
 import './index.css';
 
-
+// 添加token到浏览器本地
 const tk = localStorage.getItem('@#TOKEN');
 // 解析token并同步到redux
+// 当token出错时，不做同步，删除本地token
 if(tk){
   try{
     store.dispatch(syncUserInfo(jwtDecode(tk)));

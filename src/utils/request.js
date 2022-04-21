@@ -18,6 +18,7 @@ axios.interceptors.request.use(config=>{
     return config;
 });
 //token错误时，特殊处理
+// 当后端返回的数据是TOKEN ERROR时页面跳转到登录页
 axios.interceptors.response.use(response=>{
     const { status,msg } = response.data;
     if(status === 1 && msg === 'TOKEN ERROR'){
