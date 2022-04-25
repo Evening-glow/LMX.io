@@ -12,7 +12,8 @@ import Personal from '../pages/Personal';
 import Setup from '../pages/Setup';
 import Skill from "../pages/Skill";
 import SkillInfo from "../pages/Skill/SkillInfo";
-// import Auth from '../utils/auth';
+import MarkdownEdit from "../pages/MarkdownEdit";
+import Articles from "../pages/Articles";
 
 const routes = [
     {
@@ -57,6 +58,12 @@ const routes = [
                 element:<SkillInfo/>
             }
         ]
+    },{
+        path:'/markdown',
+        element:<MarkdownEdit/>
+    },{
+        path:'/articles',
+        element:<Articles/>
     },
     {
         path: '/*',
