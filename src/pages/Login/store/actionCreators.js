@@ -16,6 +16,7 @@ export const syncUserInfo=data=>{
 // 退出登录时，删除本地数据，并将redux中用户信息清空
 export const logout = data => {
     return dispatch => {
+        console.log('logouot')
         localStorage.removeItem('@#TOKEN');
         dispatch(syncUserInfo({}));
     }

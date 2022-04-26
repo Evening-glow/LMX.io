@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
-import { List, Typography, Row, Col } from 'antd';
+import { List, Row, Col } from 'antd';
 import topImg from '../../publicImages/images/rotationCard4.jpg';
 import { Link, Outlet } from 'react-router-dom';
 import axios from '../../utils/request';
 import imgURL from '../../utils/getSkillImgs';
 import { connect } from 'react-redux';
-import {showFu} from './store/actionCreators';
+import {hiddenFu,showFu} from './store/actionCreators';
+import withRouter from '../../utils/withRouter';
 
 const imgStyle = {
     width: '100%'
 }
-const { Paragraph } = Typography;
 class Skill extends Component {
     state = {
         info: []
     }
     componentDidMount() {
         this.props.showFu();
+        if(this.props.location.pathname.includes('/skillInfo')){
+            this.props.hiddenFu();
+        }
         axios.get('/api/skill')
             .then(response => {
                 const data = response.data.data;
@@ -65,7 +68,7 @@ class Skill extends Component {
                                     <List.Item.Meta
                                         description={<p>作者：{item.author}<br/>时间：{item.dateline.slice(0,19)}</p>}
                                     />
-                                    <Paragraph ellipsis={{ rows: 3 }}>{item.environment}</Paragraph>
+                                    {/* <Paragraph ellipsis={{ rows: 3 }}>{item.environment}</Paragraph> */}
                                 </List.Item>
                             )}
                         />
@@ -83,4 +86,4 @@ class Skill extends Component {
 const mapStateToProps = state => {
    return {skillData:state.skill}
 }
-export default connect(mapStateToProps,{showFu})(Skill);
+export default connect(mapStateToProps,{hiddenFu,showFu})(withRouter(Skill));

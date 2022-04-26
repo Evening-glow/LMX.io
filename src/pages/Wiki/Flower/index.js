@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import {hiddenFu,showFu} from '../store/actionCreators';
 import './index.css';
 
-
 class Flower extends Component {
     state = {
         name: '',
@@ -18,7 +17,6 @@ class Flower extends Component {
         area: ''
     }
     componentDidMount() {
-        console.log('flowerisgo')
         this.props.hiddenFu();
         const { id } = qs.parse(this.props.location.search.slice(1));
         // console.log("http://localhost:5000/api/flower?id="+id)

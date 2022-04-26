@@ -1,0 +1,19 @@
+.conBtn{
+    margin:10px;
+}
+.commentForm{
+    width:50vw;
+    height:80px;
+}
+.articlesTextarea{
+    width:80%;
+    height:100%;
+    border:1px solid #d9d9d9;
+    outline: none;
+}
+.articlesSubmitBtn{
+    margin-left:5px;
+}
+.comment{
+    margin-top:50px;
+}

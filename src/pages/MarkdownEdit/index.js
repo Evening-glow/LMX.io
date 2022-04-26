@@ -40,34 +40,20 @@ class MarkdownEdit extends Component {
             }
         });
         const markTohtml = md.render(string);
+        // console.log(string)
         this.setState({ htmlString: markTohtml });
     }
-    getDateString = () => {
-        const date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        month = month < 10 ? '0' + month : month;
-        let d = date.getDate();
-        d = d < 10 ? '0' + d : d;
-        let h = date.getHours();
-        h = h < 10 ? '0' + h : h;
-        let m = date.getMinutes();
-        m = m < 10 ? '0' + m : m;
-        let s = date.getSeconds();
-        s = s < 10 ? '0' + s : s;
-        return year + '-' + month + '-' + d + ' ' + h + ':' + m + ':' + s;
-    }
+    
     handleSubmit = (e) => {
         e.preventDefault();
-        const dateString = this.getDateString();
+        const time = new Date().toLocaleString('chinese', { hour12: false }).replace(' 下午',' ');
         const releaseData = {
             ...this.state.release,
-            time: dateString
+            time: time
         };
-        // console.log(releaseData)
         axios.post('/api/releaseArt',releaseData)
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 let resType = res.data.status;
                 let resMsg = res.data.msg;
                 this.props.finishFn.addFinishAc({

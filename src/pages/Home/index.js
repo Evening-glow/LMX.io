@@ -1,8 +1,10 @@
 import React from 'react';
 import { Row, Col, Layout } from 'antd';
+import {Link} from 'react-router-dom';
 import topImg from "../../publicImages/images/rotationCard2.jpg";
 import RankingList from '../../components/RankingList';
 import './index.css'
+
 const { Content } = Layout;
 
 
@@ -30,7 +32,7 @@ export default class Home extends React.Component {
                         <div className="container flowerInfo">
                             <h2>花艺</h2>
                             <ul>
-                                <li>她的插花源于瞬间灵感虽不完美却打动人心</li>
+                                <li><Link to='/skill/skillInfo/?id=2'>她的插花源于瞬间灵感虽不完美却打动人心</Link></li>
                                 <li>开业6年斩获多个奖项“一丛植造”如何在高端商场站稳脚跟</li>
                             </ul>
                         </div>
