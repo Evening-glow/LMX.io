@@ -11,12 +11,13 @@ import './index.css';
 // 添加token到浏览器本地
 const tk = localStorage.getItem('@#TOKEN');
 // 解析token并同步到redux
-// 当token出错时，不做同步，删除本地token
+// 当token出错时，不做同步，删除本地token和更改isLogin状态
 if(tk){
   try{
     store.dispatch(syncUserInfo(jwtDecode(tk)));
   }catch(err){
     localStorage.removeItem('@#TOKEN');
+    store.dispatch(syncUserInfo({}));
     window.location.href="/login";
   }
 }

@@ -14,7 +14,7 @@ export default function App() {
       <Header style={{backgroundColor: '#fff',borderBottom:'1px solid #f0f0f0'}}><MyHeader /></Header>
       <Finish />
       <Content>{ele}</Content>
-      <Footer style={{ backgroundColor: '#333', paddingTop: '20px', color: '#fff6e9' }}>footer</Footer>
+      <Footer style={{ backgroundColor: '#333', color: '#fff6e9' }}>footer</Footer>
     </Layout>
   );
 }
