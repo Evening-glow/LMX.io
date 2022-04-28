@@ -60,8 +60,8 @@ class Details extends Component {
         axios.get('/api/comments?articleID=' + articleID)
             .then(res => {
                 // console.log(res)
-                if(res.data.status === 0){
-                    this.setState({comments:res.data.data})
+                if (res.data.status === 0) {
+                    this.setState({ comments: res.data.data })
                 }
                 // console.log(this.state)
             })
@@ -104,43 +104,43 @@ class Details extends Component {
                     id: shortid.generate()
                 });
                 //提交成功后重新渲染组件
-                this.setState({});
+                this.setState({ ...this.state });
             })
             .catch(err => console.log(err))
 
     }
     render() {
         const { title, author, content, time } = this.state.data;
-        const {comments} = this.state;
+        const { comments } = this.state;
         return (
-            <Row>
-                <Col span={24} style={{ padding: '20px' }}>
-                    <Breadcrumb>
-                        <Breadcrumb.Item><Link to='/home'>首页</Link></Breadcrumb.Item>
-                        <Breadcrumb.Item><Link to='/articles'>用户分享</Link></Breadcrumb.Item>
-                    </Breadcrumb>
-                </Col>
-                <Row justify="center" style={{ padding: '30px 100px' }}>
-                    <Row>
-                        <Col span={24}>
-                            <h1 style={{ color: '#333' }}>{title}</h1>
-                            <p style={{ fontSize: '12px' }}>作者：{author}&nbsp;&nbsp;&nbsp;&nbsp;发布时间：{time.slice(0, 19).replace('\T', ' ')}</p>
-                            <div dangerouslySetInnerHTML={{ __html: md.render(content) }} style={{ paddingTop: '20px', borderTop: '1px solid #333' }}></div>
-                        </Col>
-                    </Row>
-                    {/* 评论区 */}
-                    <Row className='comment' gutter={12}>
-                        <Col>{<Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />}</Col>
-                        <Col><form onSubmit={this.handleSubmit} className="commentForm"><textarea className='articlesTextarea' onChange={this.handleChange} /><Button icon={<MessageOutlined />} type='primary' htmlType="submit" className='articlesSubmitBtn'>评论</Button></form></Col>
-                        <Col span={24}>
-                            
-                            {comments.map(item=>{
-                                return <Comments commentData={item} key={item.id}/>
-                            })}
-                        </Col>
-                    </Row>
+            <div>
+                <Row>
+                    <Col span={24} style={{ padding: '20px' }}>
+                        <Breadcrumb>
+                            <Breadcrumb.Item><Link to='/home'>首页</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item><Link to='/articles'>用户分享</Link></Breadcrumb.Item>
+                        </Breadcrumb>
+                    </Col>
                 </Row>
-            </Row>
+                <Row justify="center">
+                    <Col span={20}>
+                        <h1 style={{ color: '#333' }}>{title}</h1>
+                        <p style={{ fontSize: '12px' }}>作者：{author}&nbsp;&nbsp;&nbsp;&nbsp;发布时间：{time.slice(0, 19).replace('\T', ' ')}</p>
+                        <div dangerouslySetInnerHTML={{ __html: md.render(content) }} style={{ paddingTop: '20px', borderTop: '1px solid #333' }}></div>
+                    </Col>
+                </Row>
+                {/* 评论区 */}
+                <Row className='comment' justify="center" wrap='false'>
+                    <Col span={20}><form onSubmit={this.handleSubmit} className="commentForm"><textarea className='articlesTextarea' onChange={this.handleChange} placeholder="添加您的评论……"/><Button icon={<MessageOutlined />} type='primary' htmlType="submit" className='articlesSubmitBtn'>评论</Button></form></Col>
+
+                    <Col span={20}>
+                        {comments.map(item => {
+                            return <Comments commentData={item} key={item.id} />
+                        })}
+                    </Col>
+                </Row>
+
+            </div>
         );
     }
 }

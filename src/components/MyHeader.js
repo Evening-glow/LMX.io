@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Row, Col, Button, Avatar } from 'antd';
-import { UserOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import { UserOutlined, AppstoreOutlined, SettingOutlined,CloudUploadOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logo from '../publicImages/images/logo.png';
 import withRouter from '../utils/withRouter';
@@ -12,7 +12,7 @@ class MyHeader extends React.Component {
         current: '/home'
     };
     componentDidMount() {
-        // console.log(this.props.loginData)
+        // console.log(this.props.loginData.isLogin)
         let url = this.props.location.pathname;
         this.setState({
             current: url
@@ -25,19 +25,16 @@ class MyHeader extends React.Component {
             current: item.key
         });
     }
-    handleClick=()=>{
+    handleClick = () => {
         this.props.logout();
-        window.location.href='/home';
+        window.location.href = '/home';
     }
     render() {
         const { current } = this.state;
-        const {isLogin} = this.props.loginData;
-        const authShow = isLogin ? '' : 'none';
-        const loginShow = isLogin ? 'none':'';
         return (
             <Row justify="space-between" align="middle">
                 <Col><img src={logo} alt="logo" /></Col>
-                <Col span={12}>
+                <Col span={15}>
                     <Menu onSelect={this.handleSelectKey} defaultSelectedKeys={[current]} selectedKeys={[current]} mode="horizontal" style={{ fontSize: '16px' }}>
                         <Menu.Item key="/home">
                             <Link to="/home">首页</Link>
@@ -51,23 +48,27 @@ class MyHeader extends React.Component {
                         <Menu.Item key="/skill">
                             <Link to="/skill">花店花艺</Link>
                         </Menu.Item>
-                        
-                        <Menu.Item key="/login" style={{ display:loginShow}}>
-                            <Link to="/login">登录</Link>
-                        </Menu.Item>
-                        <Menu.Item key="/register">
-                            <Link to="/register" style={{ display:loginShow}}>注册</Link>
-                        </Menu.Item>
-                        <SubMenu key="sub4" title={<Avatar
-                            style={{
-                                backgroundColor: '#87d068',
-                            }}
-                            icon={<UserOutlined />}
-                        />} style={{ display:authShow}}>
-                            <Menu.Item key="9" icon={<AppstoreOutlined />}><Link to="/personal">我的信息</Link></Menu.Item>
-                            <Menu.Item key="10" icon={<SettingOutlined />}><Link to="/setup">设置</Link></Menu.Item>
-                            <Menu.Item key="11"><Button onClick={this.handleClick}>退出登录</Button></Menu.Item>
-                        </SubMenu>
+
+                        {this.props.loginData.isLogin ? (
+                            <><Menu.Item key="/articles">
+                                <Link to="/articles">用户分享</Link>
+                            </Menu.Item><SubMenu key="sub4" title={<Avatar
+                                style={{
+                                    backgroundColor: '#87d068',
+                                }}
+                                icon={<UserOutlined />} />}>
+                                    <Menu.Item key="9" icon={<AppstoreOutlined />}><Link to="/personal">我的信息</Link></Menu.Item>
+                                    <Menu.Item key="10" icon={<SettingOutlined />}><Link to="/setup">设置</Link></Menu.Item>
+                                    <Menu.Item key="/markdown" icon={<CloudUploadOutlined />}><Link to="/markdown">上传</Link></Menu.Item>
+                                    <Menu.Item key="11"><Button onClick={this.handleClick}>退出登录</Button></Menu.Item>
+                                </SubMenu></>
+                        ) : (
+                            <><Menu.Item key="/login">
+                                <Link to="/login">登录</Link>
+                            </Menu.Item><Menu.Item key="/register">
+                                    <Link to="/register">注册</Link>
+                                </Menu.Item></>)
+                        }
                     </Menu>
                 </Col>
             </Row>

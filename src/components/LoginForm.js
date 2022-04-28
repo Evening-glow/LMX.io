@@ -15,8 +15,7 @@ class LoginForm extends Component {
         errMsg: []
     }
     handleSubmit = async (e) => {
-        e.preventDefault(); this.setState({ errMsg: [] });
-        // console.log(this.props)
+        e.preventDefault();
         const {data}  = await this.props.loginFn.loginAc(this.state.userInfo);
         if (data.status === 0) {
             // 存储token到本地
@@ -55,13 +54,13 @@ class LoginForm extends Component {
                             <Col>
                                 <div className='formItem'>
                                     <label htmlFor='username'>
-                                        <span className="star">*</span>用户名：<input type="text" name="username" id="username" className="input" onChange={this.handleChange} />
+                                        <span className="star">*</span>用户名：<input type="text" name="username" id="username" className="input" onChange={this.handleChange} required/>
                                         {/* <p><i style={{ fontSize: '0.5rem', color: '#f00' }}>{errMsg[0] === 'username' && errMsg[1]}</i></p> */}
                                     </label>
                                 </div>
                                 <div className='formItem'>
                                     <label htmlFor='password'>
-                                        <span className="star">*</span>密码：<input type="password" name="password" id="password" className="input" onChange={this.handleChange} />
+                                        <span className="star">*</span>密码：<input type="password" name="password" id="password" className="input" onChange={this.handleChange} required/>
                                         {/* <p><i style={{ fontSize: '0.5rem', color: '#f00' }}>{errMsg[0] === 'password' && errMsg[1]}</i></p> */}
                                     </label>
                                 </div>
