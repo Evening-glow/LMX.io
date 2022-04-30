@@ -9,12 +9,12 @@ import Login from '../pages/Login';
 import Flower from '../pages/Wiki/Flower';
 import Register from "../pages/Register";
 import Personal from '../pages/Personal';
-import Setup from '../pages/Setup';
 import Skill from "../pages/Skill";
 import SkillInfo from "../pages/Skill/SkillInfo";
 import MarkdownEdit from "../pages/MarkdownEdit";
 import Articles from "../pages/Articles";
 import Details from "../pages/Articles/Details";
+import { NotFound } from "../pages/Warning";
 
 const routes = [
     {
@@ -46,9 +46,6 @@ const routes = [
     {
         path: '/personal',
         element: <Personal />
-    },{
-        path:'/setup',
-        element:<Setup/>
     },
     {
         path:'/skill',
@@ -71,6 +68,9 @@ const routes = [
                 element:<Details/>
             }
         ]
+    },{
+        path:'/notfound',
+        element:<NotFound/>
     },
     {
         path: '/*',

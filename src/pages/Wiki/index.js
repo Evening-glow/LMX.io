@@ -76,7 +76,7 @@ class Wiki extends React.Component {
                             )}
                         />
                     </Col>
-                    <Col>
+                    <Col span={6}>
                         <RankingList/>
                     </Col>
                 </Row>

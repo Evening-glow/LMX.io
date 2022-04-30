@@ -1,10 +1,9 @@
 .container{
-    margin:10px;
+    margin:10px 0;
     padding:15px;
     background-color: #fff;
 }
 .rangkingListBox{
-    width: 250px;
     margin:10px;
     padding:15px;
     background-color:#fff;
@@ -23,6 +22,7 @@
     text-align: left;
     border-bottom:1px solid #ccc;
 }
+
 .rankingList li a{
     color:#333;
 }
@@ -31,11 +31,86 @@
 }
 .top{
     color:#333;
-    /* padding:10px; */
     font-size: 1.5rem;
     font-weight: 600;
 }
 .rankingListImgs{
     width:300px;
     height:150px;
+}
+.flowerInfo,.centerImg,.rangkingListBox{
+    height: 400px;
+}
+/* .flowerInfo{background-color: #eef7f2;} */
+.centerImg{
+    width:100%;
+}
+.flowerInfo li{
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+.flowerInfo li a{
+    color:#666666;
+}
+.flowerInfo li a:hover{
+    color:#20a162;
+}
+.timeSpan{
+    text-align: right;
+}
+
+.fooBig{
+    font-size: 1.5rem;
+    color:#20894d;/*宫殿绿*/
+    font-weight: 600;
+}
+.fooCenter{
+    font-size: 1rem;
+    color: #20a162;
+}
+.fooLast{
+    font-size: 1rem;
+    color:#333;
+}
+.fooContainer{
+    position: relative;
+    /* background-color: #eef7f2; */
+    margin-top:30px;
+}
+.centerBox,.fooContainer{
+    margin-bottom: 80px;
+}
+.fooFloat{
+    position:absolute;
+    /* width:50vw; */
+    bottom:20px;
+    right:20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #fff;
+}
+.fooRightImg{
+    width:15vw;
+    margin:10px;
+}
+.nomarginleft{
+    margin-left:0;
+}
+.fooText{
+    margin-left:50px;
+}
+.wreath{
+    width:150px;
+    margin:0 auto;
+    height: 150px;
+    font-weight: 600;
+    color:#20a162;
+    font-size: 1.5rem;
+    line-height: 120px;
+    text-align: center;
+    background-image: url('../../publicImages/images/wreath.png');
+    background-size: contain;
+    background-repeat: no-repeat;
 }

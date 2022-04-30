@@ -27,6 +27,12 @@ axios.interceptors.response.use(response=>{
         localStorage.removeItem('@#TOKEN');
         window.location.href = '/login';
     }
+    //当内容不存在时，跳转到404页
+    if(status === 2){
+        console.log('wraning')
+        window.location.href = '/notfound';
+    }
+    // console.log(status)
     return response;
 });
 export default axios;

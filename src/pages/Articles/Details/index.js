@@ -59,11 +59,10 @@ class Details extends Component {
         const articleID = id;
         axios.get('/api/comments?articleID=' + articleID)
             .then(res => {
-                // console.log(res)
                 if (res.data.status === 0) {
-                    this.setState({ comments: res.data.data })
+                    console.log(res.data.data)
+                    this.setState({ comments: res.data.data.reverse() })
                 }
-                // console.log(this.state)
             })
             .catch(err => console.log(err))
     }
@@ -83,7 +82,7 @@ class Details extends Component {
             }
         });
     }
-    handleSubmit = e => {
+    handleSubmit =async e => {
         e.preventDefault();
         const time = new Date().toLocaleString('chinese', { hour12: false }).replace(' 下午', ' ');
         // console.log(time)
@@ -91,9 +90,10 @@ class Details extends Component {
             ...this.state.postData,
             dateline: time
         }
+        
         // console.log(data)
         //发起请求，提交数据到数据库
-        axios.post('/api/insertComment', data)
+        await axios.post('/api/insertComment', data)
             .then(res => {
                 const msg = res.data.msg;
                 const status = res.data.status;
@@ -103,11 +103,8 @@ class Details extends Component {
                     msg: msg,
                     id: shortid.generate()
                 });
-                //提交成功后重新渲染组件
-                this.setState({ ...this.state });
             })
             .catch(err => console.log(err))
-
     }
     render() {
         const { title, author, content, time } = this.state.data;

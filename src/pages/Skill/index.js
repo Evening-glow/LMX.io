@@ -66,7 +66,7 @@ class Skill extends Component {
                                         title={<Link to={`/skill/skillInfo/?id=${item.id}`}>{item.title}</Link>}
                                     />
                                     <List.Item.Meta
-                                        description={<p>作者：{item.author}<br/>时间：{item.dateline.slice(0,19)}</p>}
+                                        description={<p>作者：{item.author}<br/>时间：{item.dateline.slice(0,19).replace('\T',' ')}</p>}
                                     />
                                     {/* <Paragraph ellipsis={{ rows: 3 }}>{item.environment}</Paragraph> */}
                                 </List.Item>

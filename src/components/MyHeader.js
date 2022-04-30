@@ -58,7 +58,6 @@ class MyHeader extends React.Component {
                                 }}
                                 icon={<UserOutlined />} />}>
                                     <Menu.Item key="9" icon={<AppstoreOutlined />}><Link to="/personal">我的信息</Link></Menu.Item>
-                                    <Menu.Item key="10" icon={<SettingOutlined />}><Link to="/setup">设置</Link></Menu.Item>
                                     <Menu.Item key="/markdown" icon={<CloudUploadOutlined />}><Link to="/markdown">上传</Link></Menu.Item>
                                     <Menu.Item key="11"><Button onClick={this.handleClick}>退出登录</Button></Menu.Item>
                                 </SubMenu></>

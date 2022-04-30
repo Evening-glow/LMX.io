@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
-import { Breadcrumb, Row, Col} from 'antd';
+import { Breadcrumb, Row, Col } from 'antd';
 import withRouter from '../../../utils/withRouter';
 import axios from '../../../utils/request';
 import { connect } from 'react-redux';
@@ -20,13 +20,16 @@ class SkillInfo extends Component {
 
         axios.get("/api/search?table_name=articles&id=" + id)
             .then(response => {
-                const data = response.data.data[0];
-                this.setState({
-                    title: data.title,
-                    author: data.author,
-                    content: data.content,
-                    time: data.dateline
-                });
+                const { status } = response.data;
+                if (status === 0) {
+                    const data = response.data.data[0];
+                    this.setState({
+                        title: data.title,
+                        author: data.author,
+                        content: data.content,
+                        time: data.dateline
+                    });
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -45,8 +48,8 @@ class SkillInfo extends Component {
                         <Breadcrumb.Item><Link to='/skill'>花店花艺</Link></Breadcrumb.Item>
                     </Breadcrumb>
                 </Col>
-                <Row justify='center' style={{ padding: '30px 100px' }}>
-                    <Col span={24}>
+                <Row justify='center'>
+                    <Col span={20}>
                         <h1 className='content_h1'>{title}</h1>
                         <p style={{ textAlign: 'center', fontSize: '12px' }}>作者：{author}&nbsp;&nbsp;&nbsp;&nbsp;发布时间：{time}</p>
                         <div dangerouslySetInnerHTML={{ __html: content }} className='content_box'></div>

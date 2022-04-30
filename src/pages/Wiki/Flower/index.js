@@ -5,7 +5,7 @@ import withRouter from '../../../utils/withRouter';
 import qs from 'query-string';
 import axios from '../../../utils/request';
 import { connect } from 'react-redux';
-import {hiddenFu,showFu} from '../store/actionCreators';
+import { hiddenFu, showFu } from '../store/actionCreators';
 import './index.css';
 
 class Flower extends Component {
@@ -22,18 +22,21 @@ class Flower extends Component {
         // console.log("http://localhost:5000/api/flower?id="+id)
         axios.get("/api/search?table_name=flower_info&id=" + id)
             .then(response => {
-                const data = response.data.data[0];
-                this.setState({
-                    name: data.name,
-                    careKnowledge: data.careKnowledge,
-                    environment: data.environment,
-                    symbol: data.symbol,
-                    area: data.area
-                });
+                const { status } = response.data;
+                if (status === 0) {
+                    const data = response.data.data[0];
+                    this.setState({
+                        name: data.name,
+                        careKnowledge: data.careKnowledge,
+                        environment: data.environment,
+                        symbol: data.symbol,
+                        area: data.area
+                    });
+                }
             })
             .catch(err => { console.log(err) })
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.props.showFu();
     }
     render() {
@@ -65,7 +68,7 @@ class Flower extends Component {
         );
     }
 }
-const mapStateToProps = state=>{
-    return {wikiData:state.wiki};
+const mapStateToProps = state => {
+    return { wikiData: state.wiki };
 }
-export default connect(mapStateToProps,{hiddenFu,showFu})(withRouter(Flower));
+export default connect(mapStateToProps, { hiddenFu, showFu })(withRouter(Flower));

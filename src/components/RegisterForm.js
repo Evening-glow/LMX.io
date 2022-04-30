@@ -40,7 +40,7 @@ class RegisterForm extends React.Component {
         this.setState({
             userInfo: {
                 ...this.state.userInfo,
-                [e.target.name]: e.target.value
+                [e.target.name]: e.target.value.trim()
             }
         });
     }

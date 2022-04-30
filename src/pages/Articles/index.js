@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import {Link,Outlet} from 'react-router-dom';
-import {connect} from 'react-redux';
+import { Link, Outlet } from 'react-router-dom';
+import { connect } from 'react-redux';
 import withRouter from '../../utils/withRouter';
-import {hiddenFu,showFu} from './store/actionCreators';
+import { hiddenFu, showFu } from './store/actionCreators';
 import { List, Space, Row, Col } from 'antd';
 import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 import axios from '../../utils/request';
-
+import RankingList from '../../components/RankingList';
+import './index.css';
 
 const IconText = ({ icon, text }) => (
     <Space>
@@ -22,7 +23,7 @@ class Articles extends Component {
     };
     componentDidMount() {
         this.props.showFu();
-        if(this.props.location.pathname.includes('/details')){
+        if (this.props.location.pathname.includes('/details')) {
             this.props.hiddenFu();
         }
         axios.get('/api/articles')
@@ -38,8 +39,9 @@ class Articles extends Component {
         const isShow = this.props.articlesData;
         return (
             <div style={{ backgroundColor: '#fff' }}>
-                <Row justify='center' style={{display:isShow?'':'none'}}>
-                    <Col span={20}>
+                <Row><Col span={24} className='topImg'></Col></Row>
+                <Row justify='center' style={{ display: isShow ? '' : 'none' }}>
+                    <Col span={16}>
                         <List
                             itemLayout="vertical"
                             size="large"
@@ -48,6 +50,7 @@ class Articles extends Component {
                                 pageSize: 5,
                             }}
                             dataSource={dateArr}
+                            header={<h2>用户分享</h2>}
                             footer={
                                 <div>
                                     <b>ant design</b> footer part
@@ -71,6 +74,9 @@ class Articles extends Component {
                             )}
                         />
                     </Col>
+                    <Col span={6}>
+                        <RankingList/>
+                    </Col>
                 </Row>
                 <Row>
                     <Col>
@@ -82,6 +88,6 @@ class Articles extends Component {
     }
 }
 const mapStateToProps = state => {
-    return {articlesData:state.articles}
- }
- export default connect(mapStateToProps,{hiddenFu,showFu})(withRouter(Articles));
+    return { articlesData: state.articles }
+}
+export default connect(mapStateToProps, { hiddenFu, showFu })(withRouter(Articles));

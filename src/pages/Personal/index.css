@@ -15,12 +15,47 @@
     background-position: center;
 }
 .infoItem{
-    text-align: right;
-    margin:2rem;
+    margin:2rem;font-weight: 600;
 }
 .infoItem span{
 display: inline-block;
 width:150px;
-/* background-color: #ccc; */
 text-align: left;
+font-weight: 500;
+}
+.topImg{
+    width: 100vw;
+    /* transform: rotate(180deg); */
+    background-image: url('../../publicImages/images/flowerTop.jpg');
+}
+.setup_container{
+    height: 80vh;
+    background-image: url('../../publicImages/images/main-img.jpeg');
+    background-size: cover;
+}
+.setup_form{
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(5px);
+}
+.paddingItem{
+    margin-left: 20px;
+}
+.paddingItem input{
+    width:20px;
+    height: 20px;
+}
+.setform{
+    font-size: 1rem;
+}
+.setup_form_item{
+    margin:2rem;
+}
+.setup_form_item input{
+    outline: none;
+    border: 1px solid skyblue;
+    background-color: rgba(255, 255, 255, .15);
+}
+.setup_form_item button{
+    margin:5px;
 }

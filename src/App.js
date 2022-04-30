@@ -1,4 +1,4 @@
-import { useRoutes} from 'react-router-dom';
+import {Link,useRoutes} from 'react-router-dom';
 import routes from './routes';
 import React from 'react';
 import { Layout } from 'antd';
@@ -14,7 +14,9 @@ export default function App() {
       <Header style={{backgroundColor: '#fff',borderBottom:'1px solid #f0f0f0'}}><MyHeader /></Header>
       <Finish />
       <Content>{ele}</Content>
-      <Footer style={{ backgroundColor: '#333', color: '#fff6e9' }}>footer</Footer>
+      <Footer style={{ backgroundColor: '#333', color: '#fff6e9' }}>
+        <div className='callme'>联系我：邮箱linmdd@outlook.com</div>
+      </Footer>
     </Layout>
   );
 }

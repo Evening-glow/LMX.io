@@ -1,0 +1,5 @@
+.topImg{
+    height: 100px;
+    background-image: url('../../publicImages/images/flowerTop.jpg');
+    background-size: contain;
+}

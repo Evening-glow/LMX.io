@@ -43,26 +43,26 @@ class MarkdownEdit extends Component {
         // console.log(string)
         this.setState({ htmlString: markTohtml });
     }
-    
+
     handleSubmit = (e) => {
         e.preventDefault();
-        const time = new Date().toLocaleString('chinese', { hour12: false }).replace(' 下午',' ');
+        const time = new Date().toLocaleString('chinese', { hour12: false }).replace(' 下午', ' ');
         const releaseData = {
             ...this.state.release,
             time: time
         };
-        axios.post('/api/releaseArt',releaseData)
+        axios.post('/api/releaseArt', releaseData)
             .then(res => {
-                // console.log(res)
-                let resType = res.data.status;
-                let resMsg = res.data.msg;
+                let { status, msg } = res.data;
+                console.log(res.data)
                 this.props.finishFn.addFinishAc({
-                    type: resType === 0 ? 'success' : 'error',
-                    msg: resMsg,
+                    type: status === 0 ? 'success' : 'error',
+                    msg: msg,
                     id: shortid.generate()
                 });
             })
             .catch(err => console.log(err))
+        this.setState({})
     }
     /**
      * 编辑区和展示区 同步滚动
@@ -99,7 +99,7 @@ class MarkdownEdit extends Component {
         if (selectionStart === selectionEnd) {
             this.textareaNode.value = this.textareaNode.value.slice(0, selectionStart) + SELECT[which] + this.textareaNode.value.slice(selectionEnd);
         } else {
-            this.textareaNode.value = this.textareaNode.value.slice(0, selectionStart) + CHOSEN[which] + this.textareaNode.value.slice(selectionEnd);
+            this.textareaNode.value = this.textareaNode.value.slice(0, selectionStart) + CHOSEN[which] + this.textareaNode.value.slice(selectionStart, selectionEnd)+ this.textareaNode.value.slice(selectionEnd);
         }
         this.handleChange(this.textareaNode.value);
     }
@@ -126,7 +126,7 @@ class MarkdownEdit extends Component {
                                 <Button className="btn" icon={<OrderedListOutlined />} onClick={e => this.handleOnlyCharStyle(1)}>有序列表</Button>
                                 <Button className="btn" icon={<UnorderedListOutlined />} onClick={e => this.handleOnlyCharStyle(2)}>无序列表</Button>
                             </Col>
-                            <Col>标题：<input type='text' name='title' className='articleTitle' onChange={this.inputChange} required autoComplete='off'/><Button htmlType="submit" type='primary' icon={<CloudUploadOutlined />}>发布</Button></Col></Row>
+                            <Col>标题：<input type='text' name='title' className='articleTitle' onChange={this.inputChange} required autoComplete='off' /><Button htmlType="submit" type='primary' icon={<CloudUploadOutlined />}>发布</Button></Col></Row>
 
                         <Row>
                             {/**编辑区 */}
