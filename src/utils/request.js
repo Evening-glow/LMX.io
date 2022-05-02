@@ -3,8 +3,6 @@
  * 添加路由限制
  */
 import axios from 'axios';
-import { connect } from 'react-redux';
-import {syncUserInfo} from '../pages/Login/store/actionCreators';
 
 //将token添加到请求头
 axios.interceptors.request.use(config=>{
