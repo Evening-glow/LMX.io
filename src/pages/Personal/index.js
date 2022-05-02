@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Tabs, Row, Col, Result, Button } from 'antd';
+import { Link } from 'react-router-dom';
+import { Tabs, Row, Col, Result, Button, List } from 'antd';
 import { ExceptionOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import { addFinishAc } from '../Finish/store/actionCreators';
@@ -14,13 +15,14 @@ class Personal extends Component {
 
     state = {
         userInfo: {},
-        setupUserInfo:{
-            uid:this.props.loginData.user.UID,
-            username:'',
-            oldpw:'',
-            newpw:'',
-            email:'',
-            gender:''
+        userArticles: [],
+        setupUserInfo: {
+            uid: this.props.loginData.user.UID,
+            username: '',
+            oldpw: '',
+            newpw: '',
+            email: '',
+            gender: ''
         }
     }
     componentDidMount() {
@@ -28,8 +30,9 @@ class Personal extends Component {
         // console.log(uid)
         axios.get('/api/personal?uid=' + uid)
             .then(res => {
+                // console.log(res)
                 if (res.data.status === 0) {
-                    this.setState({ userInfo: res.data.userInfo[0] })
+                    this.setState({ userInfo: res.data.userInfo, userArticles: res.data.articles });
                 } else {
                     this.props.addFinishAc({
                         type: 'error',
@@ -40,7 +43,7 @@ class Personal extends Component {
             })
             .catch(err => console.log(err))
     }
-    handleChange=(e)=>{
+    handleChange = (e) => {
         this.setState({
             setupUserInfo: {
                 ...this.state.setupUserInfo,
@@ -49,31 +52,31 @@ class Personal extends Component {
         });
         // console.log(e.target.value)
     }
-    handleSubmit=e=>{
+    handleSubmit = e => {
         e.preventDefault();
-        const setupData = this.state.setupUserInfo; 
-        if(setupData.username === ''){
+        const setupData = this.state.setupUserInfo;
+        if (setupData.username === '') {
             setupData.username = this.state.userInfo.name;
         }
-        if(setupData.gender === ''){
+        if (setupData.gender === '') {
             setupData.gender = '保密';
         }
-        if(setupData.email === ''){
+        if (setupData.email === '') {
             setupData.email = this.state.userInfo.email;
         }
-        axios.post('/api/setup',setupData)
-        .then(res => {
-            const {msg,status} = res.data;
-            this.props.addFinishAc({
-                type:status === 0 ? 'success' :'error',
-                msg:msg,
-                id:shortid.generate()
+        axios.post('/api/setup', setupData)
+            .then(res => {
+                const { msg, status } = res.data;
+                this.props.addFinishAc({
+                    type: status === 0 ? 'success' : 'error',
+                    msg: msg,
+                    id: shortid.generate()
+                })
             })
-        })
-        .catch(err => console.log(err))
+            .catch(err => console.log(err))
     }
     render() {
-        const { userInfo } = this.state;
+        const { userInfo, userArticles } = this.state;
         return (
             <Row justify="center" className='container_info'>
                 <Col span={24} className='container_top'></Col>
@@ -98,11 +101,31 @@ class Personal extends Component {
                             />
                         </TabPane>
                         <TabPane tab="个人发布" key="3">
-                            <Result
-                                status="info"
-                                subTitle="暂无数据"
-                                icon={<ExceptionOutlined />}
-                            />
+                            {userArticles.length > 0
+                                ? <div className='listContainer'>
+                                    <List
+                                        itemLayout="horizontal"
+                                        pagination={{
+                                            onChange: page => { },
+                                            pageSize: 6,
+                                        }}
+                                        dataSource={userArticles}
+                                        renderItem={item => (
+                                            <List.Item>
+                                                <List.Item.Meta
+                                                    title={<Link to={`/articles/details/?id=${item.id}`}>{item.title}</Link>}
+                                                    description={<small>发布时间：{item.dateline}</small>}
+                                                />
+                                            </List.Item>
+                                        )}
+                                    />
+                                </div>
+                                : <Result
+                                    status="info"
+                                    subTitle="暂无数据"
+                                    icon={<ExceptionOutlined />}
+                                />
+                            }
                         </TabPane>
                         <TabPane tab="修改资料" key="4">
                             <Row className='setup_container' justify='center' align='center'>
@@ -111,25 +134,25 @@ class Personal extends Component {
                                     <form className='setform' onSubmit={this.handleSubmit}>
                                         <div className='setup_form_item'>
                                             <label htmlFor='username'>用户名：</label>
-                                            <input type='text' name='username' id='username' autoComplete='off' placeholder={userInfo.name} onChange={this.handleChange}/>
+                                            <input type='text' name='username' id='username' autoComplete='off' placeholder={userInfo.name} onChange={this.handleChange} />
                                         </div>
                                         <div className='setup_form_item'>
                                             <label htmlFor='oldpw'>旧密码：</label>
-                                            <input type='password' name='oldpw' id='oldpw' onChange={this.handleChange} required/>
+                                            <input type='password' name='oldpw' id='oldpw' onChange={this.handleChange} required />
                                         </div>
                                         <div className='setup_form_item'>
                                             <label htmlFor='newpw'>新密码：</label>
-                                            <input type='password' name='newpw' id='newpw' onChange={this.handleChange} required/>
+                                            <input type='password' name='newpw' id='newpw' onChange={this.handleChange} required />
                                         </div>
                                         <div className='setup_form_item'>
                                             <label htmlFor='email'>邮&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
-                                            <input type='email' name='email' id='email' autoComplete='off' placeholder={userInfo.email} onChange={this.handleChange}/>
+                                            <input type='email' name='email' id='email' autoComplete='off' placeholder={userInfo.email} onChange={this.handleChange} />
                                         </div>
                                         <div className='setup_form_item'>
                                             性&nbsp;&nbsp;&nbsp;&nbsp;别：
-                                            <label htmlFor='male' className='paddingItem'><input  type='radio' name='gender' id='male' value='男' onChange={this.handleChange}/>男</label>
-                                            <label htmlFor='female' className='paddingItem'><input type='radio' name='gender' id='female' value='女' onChange={this.handleChange}/>女</label>
-                                            <label htmlFor='secrecy' className='paddingItem'><input type='radio' name='gender' id='secrecy' value='保密' checked onChange={this.handleChange}/>保密</label>
+                                            <label htmlFor='male' className='paddingItem'><input type='radio' name='gender' id='male' value='男' onChange={this.handleChange} />男</label>
+                                            <label htmlFor='female' className='paddingItem'><input type='radio' name='gender' id='female' value='女' onChange={this.handleChange} />女</label>
+                                            <label htmlFor='secrecy' className='paddingItem'><input type='radio' name='gender' id='secrecy' value='保密' onChange={this.handleChange} />保密</label>
                                         </div>
                                         <div className='setup_form_item'>
                                             <Button htmlType="reset" type="primary">重置</Button>

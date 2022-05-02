@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Button } from 'antd';
+import { Row, Col, Button, Drawer } from 'antd';
 import { CloudUploadOutlined, BoldOutlined, ItalicOutlined, StrikethroughOutlined, OrderedListOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import markdownIt from 'markdown-it';
 import { connect } from 'react-redux';
@@ -19,9 +19,11 @@ md.linkify.set({ fuzzyEmail: false });
 class MarkdownEdit extends Component {
 
     state = {
+        visible: false,
         htmlString: '',
         release: {
             user: this.props.loginData.user.username,
+            userID: this.props.loginData.user.UID,
             title: '',
             markString: ''
         },
@@ -54,7 +56,7 @@ class MarkdownEdit extends Component {
         axios.post('/api/releaseArt', releaseData)
             .then(res => {
                 let { status, msg } = res.data;
-                console.log(res.data)
+                // console.log(res.data)
                 this.props.finishFn.addFinishAc({
                     type: status === 0 ? 'success' : 'error',
                     msg: msg,
@@ -73,8 +75,6 @@ class MarkdownEdit extends Component {
             this.showCon.scrollTop = e.target.scrollTop;
         } else if (who === 2) {
             this.textareaNode.scrollTop = e.target.scrollTop;
-        } else {
-
         }
     }
     handleTwoCharStyle = which => {
@@ -99,7 +99,7 @@ class MarkdownEdit extends Component {
         if (selectionStart === selectionEnd) {
             this.textareaNode.value = this.textareaNode.value.slice(0, selectionStart) + SELECT[which] + this.textareaNode.value.slice(selectionEnd);
         } else {
-            this.textareaNode.value = this.textareaNode.value.slice(0, selectionStart) + CHOSEN[which] + this.textareaNode.value.slice(selectionStart, selectionEnd)+ this.textareaNode.value.slice(selectionEnd);
+            this.textareaNode.value = this.textareaNode.value.slice(0, selectionStart) + CHOSEN[which] + this.textareaNode.value.slice(selectionStart, selectionEnd) + this.textareaNode.value.slice(selectionEnd);
         }
         this.handleChange(this.textareaNode.value);
     }
@@ -111,6 +111,12 @@ class MarkdownEdit extends Component {
             }
         });
     }
+    showDrawer = () => {
+        this.setState({ visible: true });
+    };
+    onClose = () => {
+        this.setState({ visible: false });
+    };
     render() {
         return (
             <Row justify='center' >
@@ -121,10 +127,46 @@ class MarkdownEdit extends Component {
                                 <Button icon={<BoldOutlined />} className="btn" onClick={e => this.handleTwoCharStyle(0)}>加粗</Button>
                                 <Button icon={<ItalicOutlined />} className="btn" onClick={e => this.handleTwoCharStyle(1)}>斜体</Button>
                                 <Button className="btn" icon={<span style={{ color: '#333', paddingRight: '5px' }}>H</span>} onClick={e => this.handleOnlyCharStyle(0)}>标题</Button>
-                                {/* <Button className="btn" icon={<UnderlineOutlined />} onClick={this.handleUnderline}>下划线</Button> */}
                                 <Button className="btn" icon={<StrikethroughOutlined />} onClick={e => this.handleTwoCharStyle(2)}>删除线</Button>
                                 <Button className="btn" icon={<OrderedListOutlined />} onClick={e => this.handleOnlyCharStyle(1)}>有序列表</Button>
                                 <Button className="btn" icon={<UnorderedListOutlined />} onClick={e => this.handleOnlyCharStyle(2)}>无序列表</Button>
+                                <Button type="ghost" onClick={this.showDrawer}>
+                                    编辑器使用指南
+                                </Button>
+                                <Drawer title="编辑器使用指南" placement="right" onClose={this.onClose} visible={this.state.visible}>
+                                    <h2>标题</h2>
+                                    <p><strong>(注意：#号后面一定要有一个空格)</strong></p>
+                                    <p>
+                                        # 一级标题<br />
+                                        ## 二级标题<br />
+                                        ### 三级标题<br />
+                                        #### 四级标题<br />
+                                        ##### 五级标题<br />
+                                        ###### 六级标题<br />
+                                    </p>
+                                    <h2>文本样式</h2>
+                                    <p>*强调文本* _强调文本_</p>
+                                    <p>**加粗文本** __加粗文本__</p>
+                                    <p>~~删除文本~~</p>
+                                    <p>&gt; 引用文本</p>
+                                    <p>2^10^ 运算结果是 1024。</p>
+                                    <h2>列表</h2>
+                                    <p>无序列表使用星号(*)、加号(+)或是减号(-)作为列表标记，这些<strong>标记后面要添加一个空格；</strong></p>
+                                    <p>列表嵌套只需在子列表中的选项前面添加四个空格即可；</p>
+                                    <p>- 项目</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;* 项目</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ 项目</p>
+                                    <p>
+                                        1. 项目1<br/>
+                                        2. 项目2<br/>
+                                        3. 项目3<br/>
+                                    </p>
+                                    <h2>水平线</h2>
+                                    <p>可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，<strong>行内不能有其他东西</strong></p>
+                                    <p>****</p>
+                                    <p>---</p>
+                                    <p>____</p>
+                                </Drawer>
                             </Col>
                             <Col>标题：<input type='text' name='title' className='articleTitle' onChange={this.inputChange} required autoComplete='off' /><Button htmlType="submit" type='primary' icon={<CloudUploadOutlined />}>发布</Button></Col></Row>
 

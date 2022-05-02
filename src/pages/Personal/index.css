@@ -59,3 +59,6 @@ font-weight: 500;
 .setup_form_item button{
     margin:5px;
 }
+.listContainer{
+    padding:30px;
+}

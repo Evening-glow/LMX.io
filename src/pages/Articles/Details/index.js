@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import qs from 'query-string';
-import { Breadcrumb, Row, Col, Button, Avatar } from 'antd';
-import { MessageOutlined, UserOutlined } from '@ant-design/icons';
+import { Breadcrumb, Row, Col, Button } from 'antd';
+import { MessageOutlined } from '@ant-design/icons';
 import withRouter from '../../../utils/withRouter';
 import axios from '../../../utils/request';
 import { connect } from 'react-redux';
@@ -31,6 +31,7 @@ class Details extends Component {
         },
         postData: {
             auth: '',
+            uid:null,
             content: '',
             articleID: null,
         },
@@ -70,13 +71,14 @@ class Details extends Component {
         this.props.articlesFn.showFu();
     }
     handleChange = (e) => {
-        const { username } = this.props.loginData.user;
+        const { username,UID } = this.props.loginData.user;
         const { id } = qs.parse(this.props.location.search.slice(1));
         const content = e.target.value;
         // console.log(username,id,content)
         this.setState({
             postData: {
                 auth: username,
+                uid:UID,
                 content: content,
                 articleID: id
             }
@@ -91,7 +93,7 @@ class Details extends Component {
             dateline: time
         }
         
-        // console.log(data)
+        console.log(data)
         //发起请求，提交数据到数据库
         await axios.post('/api/insertComment', data)
             .then(res => {
@@ -120,9 +122,9 @@ class Details extends Component {
                     </Col>
                 </Row>
                 <Row justify="center">
-                    <Col span={20}>
+                    <Col span={20} className='content_article'>
                         <h1 style={{ color: '#333' }}>{title}</h1>
-                        <p style={{ fontSize: '12px' }}>作者：{author}&nbsp;&nbsp;&nbsp;&nbsp;发布时间：{time.slice(0, 19).replace('\T', ' ')}</p>
+                        <p style={{ fontSize: '12px' }}>作者：{author}&nbsp;&nbsp;&nbsp;&nbsp;发布时间：{time.slice(0, 19).replace('T', ' ')}</p>
                         <div dangerouslySetInnerHTML={{ __html: md.render(content) }} style={{ paddingTop: '20px', borderTop: '1px solid #333' }}></div>
                     </Col>
                 </Row>
@@ -130,7 +132,7 @@ class Details extends Component {
                 <Row className='comment' justify="center" wrap='false'>
                     <Col span={20}><form onSubmit={this.handleSubmit} className="commentForm"><textarea className='articlesTextarea' onChange={this.handleChange} placeholder="添加您的评论……"/><Button icon={<MessageOutlined />} type='primary' htmlType="submit" className='articlesSubmitBtn'>评论</Button></form></Col>
 
-                    <Col span={20}>
+                    <Col span={20} className='comments'>
                         {comments.map(item => {
                             return <Comments commentData={item} key={item.id} />
                         })}

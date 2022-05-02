@@ -53,7 +53,7 @@ class Articles extends Component {
                             header={<h2>用户分享</h2>}
                             footer={
                                 <div>
-                                    <b>ant design</b> footer part
+                                    <i style={{fontSize:'0.5rem'}}>欢迎发帖，请友善评论</i>
                                 </div>
                             }
                             renderItem={item => (

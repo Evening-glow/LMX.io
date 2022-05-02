@@ -16,6 +16,9 @@
 .articlesSubmitBtn{
     margin-left:5px;
 }
+.content_article,.comments{
+    width:80vw;
+}
 .comment{
     margin:50px 0;
 }
