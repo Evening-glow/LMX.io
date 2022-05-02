@@ -76,7 +76,7 @@ class RegisterForm extends React.Component {
                                         <p><i style={{ fontSize: '0.5rem', color: '#f00' }}>{errMsg[0] === 'repPassword' && errMsg[1]}</i></p>
                                     </label>
                                 </div>
-                                <div className='formItem'><Button htmlType="submit" type="primary" style={{ width: '100%' }}>登录</Button></div>
+                                <div className='formItem'><Button htmlType="submit" type="primary" style={{ width: '100%' }}>注册</Button></div>
                                 <div className='formItem'>已有账号？<Link to="/login">去登录</Link></div>
                             </Col>
                         </Row>

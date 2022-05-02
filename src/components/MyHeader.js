@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Row, Col, Button, Avatar } from 'antd';
-import { UserOutlined, AppstoreOutlined, SettingOutlined,CloudUploadOutlined } from '@ant-design/icons';
+import { UserOutlined, AppstoreOutlined,CloudUploadOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logo from '../publicImages/images/logo.png';
 import withRouter from '../utils/withRouter';
@@ -33,14 +33,11 @@ class MyHeader extends React.Component {
         const { current } = this.state;
         return (
             <Row justify="space-between" align="middle">
-                <Col><img src={logo} alt="logo" /></Col>
-                <Col span={15}>
+                <Col><Link to='/home'><img src={logo} alt="logo" /></Link></Col>
+                <Col span={10}>
                     <Menu onSelect={this.handleSelectKey} defaultSelectedKeys={[current]} selectedKeys={[current]} mode="horizontal" style={{ fontSize: '16px' }}>
                         <Menu.Item key="/home">
                             <Link to="/home">首页</Link>
-                        </Menu.Item>
-                        <Menu.Item key="/photos">
-                            <Link to="/photos">花卉图片</Link>
                         </Menu.Item>
                         <Menu.Item key="/wiki">
                             <Link to="/wiki">花卉知识</Link>
